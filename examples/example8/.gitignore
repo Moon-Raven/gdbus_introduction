@@ -1,0 +1,5 @@
+main
+.vscode/
+*generated*
+server
+client

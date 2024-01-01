@@ -1,0 +1,16 @@
+<node>
+  <!-- <interface name="net.Corp.MyApp.Frobber"> -->
+  <interface name="org.alarm">
+
+    <method name="SetPeriod">
+      <arg name="message" direction="in" type="s"/>
+      <arg name="period" direction="in" type="u"/>
+      <arg name="response" direction="out" type="s"/>
+    </method>
+
+    <signal name="AlarmNotification">
+      <arg name="message" type="s"/>
+    </signal>
+
+  </interface>
+</node>

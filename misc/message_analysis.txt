@@ -1,0 +1,96 @@
+This file shows how to interpret D-Bus messages.
+
+Message #1: A method request:
+    ======= HEADER ============
+    6c - endianess
+    01 - message type (method call in this case)
+    00 - flags
+    01 - protocol version
+    18 00 00 00 - message body len
+    03 00 00 00 - cookie serial of the message
+    4a 00 00 00 array length (in bytes), this is referring to the array of header fields
+
+    01 - field id 1 (object path)
+    01 - signature length
+    6f - signature of gvariant (object path), ascii o
+    00 - signature terminating null character
+    0a 00 00 00 - string length
+    2f 6d 79 2f 6f 62 6a 65 63 74   /my/object
+    00 00 00 00 00 00 - padding
+
+    02 - field id 2 (interface)
+    01 - signature length
+    73 - signature of gvariant (asci 's')
+    00 - signature terminating null character
+    09 00 00 00 - string length
+    6f 72 67 2e 61 6c 61 72 6d - org.alarm
+    00  - terminating byte
+    00 00 00 00 00 00  - padding
+
+    08 - field id 8 (signature)
+    01 - signature length
+    67 - signature of gvariant (g)
+    00 - signature terminating null character
+    02 - signature length
+    73 - ascii s
+    75 - ascii u 
+    00 - signature null termination character
+
+    03 - field id 3 (member)
+    01 - signature length
+    73 - ascii s
+    00 - signature null termination character
+    09 00 00 00 - string length
+    53 65 74 50 65 72 69 6f 64 - SetPeriod
+    00 - string null terminator
+    00 00 00 00 00 00 - header padding
+    ==================== END OF HEADER ========================
+
+    ==================== MESSAGE BODY ========================
+    0c 00 00 00 - string length 
+    43 6c 69 65 6e 74 5f 68 65 6c 6c 6f - Client_hello
+    00 - string null terminator
+    00 00 00 - padding (unknown why)
+    64 00 00 00 - an uint32
+    ==================== MESSAGE BODY END ========================
+
+
+Message #2: A signal emission:
+    ======= HEADER ============
+    6c - endianess
+    04 - message type (signal)
+    01 - flags (no reply expected)
+    01 - protocol version
+    11 00 00 00 - message body len
+    87 00 00 00 - cookie serial of the message
+    52 00 00 00 - array length of the header
+
+    01 - field id 1 (object path)
+    01 6f 00 - signature of gvariant (ascii o)
+    0a 00 00 00 - string length
+    2f 6d 79 2f 6f 62 6a 65 63 74 - string of object path (/my/object)
+    00 - null terminator 
+    00 00 00 00 00 - padding
+    
+    02 - field id (interface)
+    01 73 00 - signature of gvariant (ascii 's')
+    09 00 00 00 - stirng len
+    6f 72 67 2e 61 6c 61 72 6d 00 - string (org.alarm)
+    00 00 00 00 00 00 - padding
+
+    08 - field id 8 (signature)
+    01 67 00 - signature of gvariant (ascii 's')
+    01 73 00 - signature of message body (ascii 's')
+    00 - padding
+
+    03 - field id 3 (member)
+    01 73 00 - signature (ascii 's')
+    11 00 00 00 - string len
+    41 6c 61 72 6d 4e 6f 74 69 66 69 63 61 74 69 6f 6e 00 - string (AlarmNotification)
+    00 00 00 00 00 00 - padding
+    ==================== END OF HEADER ========================
+    
+    ==================== MESSAGE BODY ========================
+    0c 00 00 00 - string length
+    43 6c 69 65 6e 74 5f 68 65 6c 6c 6f 00 - string (Client_hello)
+    ==================== MESSAGE BODY END ========================

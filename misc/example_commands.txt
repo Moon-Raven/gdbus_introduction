@@ -1,0 +1,1 @@
+dbus-send --dest=org.perica --print-reply --session /my/object --type="method_call" org.alarm.SetPeriod string:"Hello" uint32:5
